@@ -1,0 +1,549 @@
+/* Reset básico: remove as margens padrão e facilita o controle dos tamanhos. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #edf5ff;
+  color: #142647;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+/* Cabeçalho e rodapé compartilham a mesma identidade visual. */
+.cabecalho,
+.rodape {
+  position: relative;
+  background: linear-gradient(110deg, #0754d9 0%, #0872ed 55%, #328bf5 100%);
+  color: #f4fbfa;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 5vw, 4rem);
+}
+
+.cabecalho h1 {
+  margin: 0;
+}
+
+.botao-instalar {
+  margin-left: auto;
+  padding: 0.65rem 1rem;
+  border: 1px solid #b9efff;
+  border-radius: 0.5rem;
+  background-color: #f4fbfa;
+  color: #123d75;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.botao-instalar:hover {
+  transform: translateY(-1px);
+  background-color: #dff6ff;
+}
+
+.botao-instalar:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.icone-app,
+.icone-rodape {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+}
+
+.cabecalho::after,
+.rodape::before {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  left: 0;
+  height: 3px;
+  content: "";
+  background: linear-gradient(90deg, transparent, #8edbff, #e4f8ff, #8edbff, transparent);
+  background-size: 200% 100%;
+  filter: drop-shadow(0 0 8px #8bdcff) drop-shadow(0 0 18px rgb(91 201 255 / 90%));
+  animation: brilho-da-borda 4s linear infinite;
+}
+
+.cabecalho::after {
+  bottom: 0;
+}
+
+.rodape::before {
+  top: 0;
+}
+
+@keyframes brilho-da-borda {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: -100% 0;
+  }
+}
+
+.conteudo-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding: 2rem clamp(1.5rem, 8vw, 7rem) 1rem;
+}
+
+.contato p,
+.contato ul {
+  margin: 0 0 0.5rem;
+}
+
+.contato ul {
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.contato a {
+  color: #b9efff;
+}
+
+.direitos-autorais {
+  margin: 0;
+  padding: 0.75rem 1rem 1rem;
+  text-align: center;
+}
+
+.conteudo-principal {
+  flex: 1;
+}
+
+@property --angulo-borda {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.botao-novo-registro {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  display: block;
+  margin: 1.5rem auto;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid #67dcff;
+  border-radius: 0.75rem;
+  background-color: #092e70;
+  box-shadow: 0 0 8px rgb(71 202 255 / 65%), inset 0 0 6px rgb(71 202 255 / 20%);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.botao-novo-registro::before {
+  position: absolute;
+  z-index: -1;
+  inset: -3px;
+  padding: 2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--angulo-borda),
+    transparent 0deg 235deg,
+    #39cfff 270deg,
+    #fff 285deg,
+    #39cfff 300deg,
+    transparent 335deg 360deg
+  );
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+.botao-novo-registro:hover {
+  transform: scale(1.05);
+  border-color: #67dcff;
+  background-color: #104394;
+  box-shadow: 0 0 14px rgb(71 202 255 / 90%), inset 0 0 8px rgb(71 202 255 / 30%);
+}
+
+.botao-novo-registro:hover::before,
+.botao-novo-registro:focus-visible::before {
+  opacity: 1;
+  animation: percorrer-borda 2s linear infinite;
+}
+
+@keyframes percorrer-borda {
+  to {
+    --angulo-borda: 360deg;
+  }
+}
+
+.botao-novo-registro:focus-visible {
+  outline: 3px solid #72dcff;
+  outline-offset: 4px;
+}
+
+/* A imagem ocupa o fundo do hero, enquanto o texto fica na camada superior. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 13rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1.5rem;
+  box-shadow:
+    inset 0 -2.5rem 2rem -1.5rem rgb(0 0 0 / 75%),
+    0 8px 18px -10px rgb(0 0 0 / 38%);
+  color: #fff;
+  text-align: center;
+}
+
+.imagem-fundo,
+.hero::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.imagem-fundo {
+  z-index: -2;
+  object-fit: cover;
+}
+
+.hero::before {
+  content: "";
+  background:
+    linear-gradient(to top, rgb(0 0 0 / 52%), transparent 48%),
+    rgb(0 0 0 / 58%);
+}
+
+.titulo-hero,
+.texto-hero {
+  position: relative;
+  margin: 0.35rem 0;
+}
+
+.titulo-hero {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+.texto-hero {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+}
+
+.texto-hero {
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cabecalho::after,
+  .rodape::before,
+  .botao-novo-registro:hover::before,
+  .botao-novo-registro:focus-visible::before {
+    animation: none;
+  }
+}
+
+/* Área dos registros e seus controles de ordenação. */
+.registros {
+  width: min(100%, 76rem);
+  margin: 2.5rem auto;
+  padding: 0 clamp(1rem, 5vw, 3rem) 3rem;
+}
+
+.registros-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.registros-heading h2 {
+  color: #103b76;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.filtro-ordem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #173d70;
+  font-weight: 650;
+}
+
+.botao-ordem {
+  padding: 0.45rem 0.8rem;
+  border: 1px solid #78bdf2;
+  border-radius: 0.65rem;
+  background-color: #dceeff;
+  box-shadow: 0 2px 7px rgb(20 100 180 / 12%);
+  color: #123d75;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.95rem;
+  transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.botao-ordem:hover {
+  transform: translateY(-2px);
+  background-color: #c9e5ff;
+  box-shadow: 0 4px 12px rgb(20 100 180 / 24%);
+}
+
+.botao-ordem[aria-pressed="true"] {
+  border-color: #2388dc;
+  background-color: #b9dcff;
+  box-shadow: inset 0 0 0 1px rgb(35 136 220 / 18%);
+  color: #082f64;
+}
+
+.botao-ordem:focus-visible,
+.form button:focus-visible,
+#formulario-registro input:focus-visible,
+#formulario-registro select:focus-visible,
+#formulario-registro textarea:focus-visible {
+  outline: 3px solid #36a9f2;
+  outline-offset: 3px;
+}
+
+#estado-vazio {
+  padding: 1.5rem;
+  border: 1px dashed #a9c9e9;
+  border-radius: 0.85rem;
+  color: #4d6380;
+  text-align: center;
+}
+
+#registros-list {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+#registros-list > li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1rem;
+  align-items: start;
+  padding: 1.25rem;
+  border: 1px solid #c7dcf4;
+  border-left: 4px solid #2388dc;
+  border-radius: 0.85rem;
+  background-color: #fff;
+  box-shadow: 0 5px 16px rgb(19 63 111 / 9%);
+  overflow-wrap: anywhere;
+}
+
+#registros-list h3 {
+  grid-column: 1;
+  grid-row: 1;
+  color: #103b76;
+  font-size: 1.2rem;
+}
+
+#registros-list > li > p:first-of-type {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  color: #526d8b;
+  text-align: right;
+}
+
+#registros-list > li > p:nth-of-type(2) {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 0.5rem;
+}
+
+#registros-list button {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: end;
+  margin-top: 0.75rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #8dbce8;
+  border-radius: 0.55rem;
+  background-color: #edf5ff;
+  color: #174b83;
+  cursor: pointer;
+  font: inherit;
+}
+
+#registros-list button:hover {
+  background-color: #dceeff;
+}
+
+/* Janela e campos do formulário de registro. */
+.form {
+  width: min(90vw, 38rem);
+  margin: auto;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  padding: 1.5rem;
+  border: 1px solid #a8d6fa;
+  border-radius: 1rem;
+  background-color: #f8fbff;
+  box-shadow: 0 18px 55px rgb(4 30 65 / 32%);
+  color: #142647;
+}
+
+.form::backdrop {
+  background-color: rgb(5 24 52 / 62%);
+  backdrop-filter: blur(3px);
+}
+
+.cabecalho-formulario {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  color: #103b76;
+}
+
+#fechar-formulario {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid #a8c8e9;
+  border-radius: 50%;
+  background-color: #e6f2ff;
+  color: #123d75;
+  cursor: pointer;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+#formulario-registro {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.data-registro {
+  display: grid;
+  grid-template-columns: minmax(4rem, 1fr) minmax(5.5rem, 1.4fr) minmax(3rem, 0.6fr);
+  gap: 0.75rem;
+}
+
+.campo-data {
+  display: grid;
+  align-content: start;
+  gap: 0.65rem;
+}
+
+#formulario-registro label {
+  color: #1d3f6b;
+  font-weight: 650;
+}
+
+#formulario-registro input,
+#formulario-registro select,
+#formulario-registro textarea {
+  width: 100%;
+  margin-bottom: 0.6rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #a9c5e3;
+  border-radius: 0.6rem;
+  background-color: #fff;
+  color: #142647;
+  font: inherit;
+}
+
+#dia-registro option:disabled {
+  background-color: #e7edf5;
+  color: #7d8999;
+}
+
+#formulario-registro textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+#formulario-registro button[type="submit"] {
+  margin-top: 0.4rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #56c8f4;
+  border-radius: 0.7rem;
+  background-color: #0b4d9c;
+  box-shadow: 0 0 9px rgb(71 202 255 / 32%);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition: background-color 160ms ease, box-shadow 160ms ease;
+}
+
+#formulario-registro button[type="submit"]:hover {
+  background-color: #1267bd;
+  box-shadow: 0 0 14px rgb(71 202 255 / 58%);
+}
+
+@media (max-width: 600px) {
+  .cabecalho {
+    flex-wrap: wrap;
+  }
+
+  .cabecalho h1 {
+    min-width: 0;
+    flex: 1 1 12rem;
+  }
+
+  .registros-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filtro-ordem {
+    flex-wrap: wrap;
+  }
+
+  .conteudo-rodape {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .form {
+    padding: 1.15rem;
+  }
+}

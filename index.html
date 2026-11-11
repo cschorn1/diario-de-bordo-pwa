@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0872ed">
+  <title>Diário de Bordo</title>
+  <meta name="description" content="Registre atividades diárias com título, descrição e data. Consulte e remova seus registros no Diário de Bordo, mesmo offline.">
+  <link rel="icon" type="image/png" href="icons/icon.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="cabecalho">
+    <img class="icone-app" src="icons/icon-192.png" alt="" aria-hidden="true">
+    <h1>Diário de Bordo</h1>
+    <button class="botao-instalar" id="instalar-app" type="button" hidden>Instalar App</button>
+  </header>
+
+  <main class="conteudo-principal">
+    <section class="hero" aria-labelledby="titulo-hero">
+      <img
+        class="imagem-fundo"
+        src="images/hero.webp"
+        srcset="images/hero-671x210.webp 671w, images/hero.webp 1920w"
+        sizes="100vw"
+        fetchpriority="high"
+        alt=""
+        aria-hidden="true"
+      >
+      <h2 class="titulo-hero" id="titulo-hero">SEU ESPAÇO DE REGISTROS</h2>
+      <p class="texto-hero">Guarde os momentos e aprendizados do seu dia. Do presente à memórias queridas.</p>
+    </section>
+    
+    <button class="botao-novo-registro" id="abrir-formulario" type="button">+ Adicionar novo registro +</button>
+
+    <dialog class="form" id="formulario-dialogo" aria-labelledby="titulo-formulario">
+      <div class="cabecalho-formulario">
+        <h2 id="titulo-formulario">Novo registro</h2>
+        <button id="fechar-formulario" type="button" aria-label="Fechar formulário">&times;</button>
+      </div>
+      <form id="formulario-registro">
+        <label for="titulo-registro">Título</label>
+        <input id="titulo-registro" name="titulo" type="text" maxlength="80" placeholder="Digite o titulo desejado" required>
+
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" name="descricao" rows="4" placeholder="Descreva seu registro" required></textarea>
+
+        <div class="data-registro">
+          <div class="campo-data">
+            <label for="ano-registro">Ano</label>
+            <select id="ano-registro" name="ano" required>
+              <option value="">Ano</option>
+            </select>
+          </div>
+          <div class="campo-data">
+            <label for="mes-registro">Mês</label>
+            <select id="mes-registro" name="mes" required>
+              <option value="">Mês</option>
+              <option value="1">Janeiro</option>
+              <option value="2">Fevereiro</option>
+              <option value="3">Março</option>
+              <option value="4">Abril</option>
+              <option value="5">Maio</option>
+              <option value="6">Junho</option>
+              <option value="7">Julho</option>
+              <option value="8">Agosto</option>
+              <option value="9">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </div>
+          <div class="campo-data">
+            <label for="dia-registro">Dia (opcional)</label>
+            <select id="dia-registro" name="dia">
+              <option value="">Sem dia</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="20">20</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="31">31</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit">Salvar registro</button>
+      </form>
+    </dialog>
+
+    <section class="registros" aria-labelledby="titulo-registros">
+      <div class="registros-heading">
+        <h2 id="titulo-registros">Meus registros</h2>
+        <div class="filtro-ordem" role="group" aria-label="Ordenar registros">
+          <span>Ordem:</span>
+          <button class="botao-ordem" id="ordem-recentes" type="button" data-ordem="recentes" aria-pressed="true">Recentes</button>
+          <button class="botao-ordem" id="ordem-antigas" type="button" data-ordem="antigas" aria-pressed="false">Antigas</button>
+        </div>
+      </div>
+      <p id="estado-vazio">Seus registros aparecerão aqui.</p>
+      <ul id="registros-list" aria-live="polite"></ul>
+    </section>
+  </main>
+  
+  <footer class="rodape">
+    <div class="conteudo-rodape">
+      <img class="icone-rodape" src="icons/icon-192.png" alt="" aria-hidden="true">
+      <div class="contato">
+        <p>Entre em contato com o criador:</p>
+        <ul>
+          <li><a href="https://www.instagram.com/conradoschorn/">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/in/conrado-schorn/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="direitos-autorais">&copy; 2026 Diário de Bordo. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
